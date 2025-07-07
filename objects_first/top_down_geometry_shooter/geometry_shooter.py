@@ -90,7 +90,6 @@ def create_enemy():
     @enemy.register
     def act(self):
         pass
-        # print("enemy pos", enemy.center, enemy.rect, enemy.size)
 
 
 def kill_enemy(enemy):

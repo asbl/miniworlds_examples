@@ -1,7 +1,9 @@
-from miniworldmaker import *
-board = PhysicsBoard(400,400)
-board.gravity = (0, 0)
-p1 = Token(100,100)
+import miniworlds
+import miniworlds_physics
+
+world = miniworlds_physics.PhysicsWorld(400,400)
+world.gravity = (0, 0)
+p1 = miniworlds.Actor((100,100))
 p1.physics.simulation = "manual"
 p1.size = (40, 40)
 p1.physics.density = 50
@@ -23,4 +25,4 @@ def on_key_pressed_d(self):
 p2 = Circle(300,100)
 p2.physics.density = 1
 p2.elasticy = 20
-board.run()
+world.run()

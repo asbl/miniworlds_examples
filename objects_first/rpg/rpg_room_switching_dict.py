@@ -1,4 +1,4 @@
-from miniworldmaker import *
+from miniworlds import *
 
 world = TiledWorld()
 world.columns = 3
@@ -23,27 +23,27 @@ class Player(Actor):
         self.layer = 1
         
     def on_key_down_w(self):
-        self.move_up()
+        self.move(direction = "up")
 
     def on_key_down_s(self):
-        self.move_down()
+        self.move(direction = "down")
 
     def on_key_down_a(self):
-        self.move_left()
+        self.move(direction = "left")
     
     def on_key_down_d(self):
-        self.move_right()
+        self.move(direction = "right")
         
     def on_not_detecting_world(self):
-        self.move_back()
+        self.undo_move()
 
     def on_detecting_wall(self, other):
-        self.move_back()
+        self.undo_move()
         
     def on_key_down(self, keys):
         global r01
-        if "SPACE" in keys:
-            if self.detect_actor(Wall):
+        if "space" in keys:
+            if self.detect(Door):
                 setup_room(rooms[1])
 
 class Wall(Actor):
@@ -68,9 +68,9 @@ def setup_room(room):
             x = j
             y = i
             if room[i][j] == "w":
-                t = Wall(x, y)
+                t = Wall((x, y))
             if room[i][j] == "d":
-                d = Door(x, y)                
+                d = Door((x, y)                )
                 
-player = Player(0, 0)
+player = Player((0, 0))
 world.run()

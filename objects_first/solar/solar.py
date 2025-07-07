@@ -21,7 +21,7 @@ sun = Circle((200,200),10)
 sun.color = (255,255,0)
 
 planets = []
-for i in range(40):
+for i in range(1000):
     c = random.randint(0,255)
     pos = (random.randint(0,400), random.randint(0,400))
     color = (c, c, c)

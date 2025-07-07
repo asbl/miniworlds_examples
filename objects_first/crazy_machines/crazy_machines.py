@@ -3,8 +3,8 @@ import miniworlds_physics
 import random
 
 world = miniworlds_physics.PhysicsWorld(400, 400)
-toolbar = world.add_right(miniworlds.Toolbar(), size=200)
-lines_counter = toolbar.add_widget(miniworlds.CounterLabel("Lines"))
+toolbar = world.layout.add_right(miniworlds.Toolbar(), size=200)
+lines_counter = toolbar.add(miniworlds.CounterLabel("Lines"))
 
 obj = "line"
 state = None
