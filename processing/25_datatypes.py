@@ -1,10 +1,10 @@
-from miniworldmaker import *
+from miniworlds import *
 import random
-board = PixelBoard((100,100))
+world = World(100,100)
 c = Circle((0,50), 20)
-@board.register
+@world.register
 def act(self):
     c.x = c.x + 1
     
-board.run()
+world.run()
 

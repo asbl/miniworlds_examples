@@ -1,15 +1,15 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = PixelBoard()
-board.size = (120,210)
+world = World()
+world.size = (120,210)
 
-@board.register
+@world.register
 def on_setup(self):
-    board.fps = 1
-    board.speed = 3
+    world.fps = 1
+    world.speed = 3
     
-@board.register
+@world.register
 def act(self):
-    print(board.frame)
+    print(world.frame)
 
-board.run()
+world.run()

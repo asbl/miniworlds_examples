@@ -1,17 +1,17 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = PixelBoard()
-board.size = (120,210)
+world = World()
+world.size = (120,210)
 
-@board.register
+@world.register
 def on_setup(self):
     print(1)
 
 print(2)
 
-@board.register
+@world.register
 def act(self):
     print(3)
 print(4)
 
-board.run()
+world.run()

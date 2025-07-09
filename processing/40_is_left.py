@@ -1,11 +1,11 @@
-from miniworldmaker import *
+from miniworlds import *
 import random
 
-board = Board(400, 50)
+world = World(400, 50)
         
 
 def is_left(obj):
-    if obj.center.x <= 200:
+    if obj.center[0] <= 200:
         return True
     else:
         return False
@@ -18,4 +18,4 @@ for i in range(20):
         c.color = (255,0,0)
 
 
-board.run()
+world.run()

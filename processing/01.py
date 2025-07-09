@@ -1,6 +1,6 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = Board()
+world = World()
 
 
-board.run()
+world.run()

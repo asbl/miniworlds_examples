@@ -1,6 +1,6 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = Board(400, 400)
+world = World(400, 400)
 
 
 for x in range(400):
@@ -8,5 +8,5 @@ for x in range(400):
     y = 400 - gl
     Point((x, y))
     
-board.run()
+world.run()
 

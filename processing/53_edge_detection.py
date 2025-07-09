@@ -1,8 +1,8 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = Board(600,400)
-board.add_background("images/sunflower.jpg")
-arr = board.background.to_colors_array()
+world = World(600,400)
+world.add_background("images/sunflower.jpg")
+arr = world.background.to_colors_array()
 grey_arr = arr.copy()
 
 def brightness(r, g, b):
@@ -46,7 +46,7 @@ for x in range(len(arr)):
 #        arr[x][y][1] = 255 - arr[x][y][1]
 #        arr[x][y][2] = 255 - arr[x][y][2]
         
-board.background.from_array(arr)
-board.run()
+world.background.from_array(arr)
+world.run()
 
 

@@ -1,6 +1,6 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = Board(400, 240)
+world = World(400, 240)
 
 months = []
 months.append(1.9)
@@ -23,6 +23,6 @@ for month in months:
     n.font_size = 10
     i = i + 20
     
-board.run()
+world.run()
     
    

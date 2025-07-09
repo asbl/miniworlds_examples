@@ -1,6 +1,6 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = Board(300, 200)
+world = World(300, 200)
 
 rect = Rectangle((280,120), 20, 80)
 
@@ -10,4 +10,4 @@ def act(self):
     if rect.x == 0:
         rect.x = 280
 
-board.run()
+world.run()

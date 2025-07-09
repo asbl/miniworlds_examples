@@ -1,6 +1,6 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = Board(200, 50)
+world = World(200, 50)
 
 for i in range(4):
     rect = Rectangle((50 * i, 0), 50, 50)
@@ -9,5 +9,5 @@ for i in range(4):
     else:
         rect.color = (255, 255, 255, 255)
     
-board.run()
+world.run()
 

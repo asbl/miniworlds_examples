@@ -1,12 +1,12 @@
-from miniworldmaker import *
+from miniworlds import *
 from random import randint
 
 WIDTH = 600
 HEIGHT = 400
 
-board = Board(WIDTH, HEIGHT)
+world = World(WIDTH, HEIGHT)
 
-board.add_background((235, 215, 182))
+world.add_background((235, 215, 182))
 
 for _ in range(200):
     x = randint(15, WIDTH -15)
@@ -24,4 +24,4 @@ for _ in range(200):
     rect.color = (r, g, b, alpha)
     
 print("I did it, Babe")
-board.run()
+world.run()

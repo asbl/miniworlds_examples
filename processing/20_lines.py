@@ -1,14 +1,14 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = PixelBoard()
+world = World()
 
-@board.register
+@world.register
 def on_setup(self):
-    board.size = (200,200)
+    world.size = (200,200)
 
-@board.register
+@world.register
 def act(self):
-    Line(board.get_prev_mouse_position(), board.get_mouse_position()) 
+    Line(world.get_prev_mouse_position(), world.get_mouse_position()) 
 
-board.run()
+world.run()
 

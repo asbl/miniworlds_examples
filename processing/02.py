@@ -1,7 +1,7 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = PixelBoard(800, 600)
+world = World(800, 600)
 
 Point((10,10))
 
-board.run()
+world.run()

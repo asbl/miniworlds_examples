@@ -1,6 +1,6 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = Board(300, 200)
+world = World(300, 200)
 
 rect = Rectangle((280,120), 20, 80)
 ball = Circle((20,50),20)
@@ -16,7 +16,7 @@ def act(self):
 def act(self):
     global velocity
     self.y += velocity
-    if board.frame % 10 == 0:
+    if world.frame % 10 == 0:
         velocity += 1
     
-board.run() 
+world.run() 

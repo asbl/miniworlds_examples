@@ -1,4 +1,4 @@
-from miniworldmaker import *
+from miniworlds import *
 
 months = []
 months.append(1.9)

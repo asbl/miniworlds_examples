@@ -1,8 +1,8 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = PixelBoard()
-board.size = (120,210)
-Rectangle((10,100), 100, 100)
+world = World()
+world.size = (120,210)
+Rectangle.from_topleft((10,100), 100, 100)
 Triangle((10,100), (60, 50), (110, 100))
 
-board.run()
+world.run()

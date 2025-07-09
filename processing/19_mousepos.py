@@ -1,12 +1,12 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = PixelBoard()
+world = World()
 
-@board.register
+@world.register
 def act(self):
-    c = Circle(board.get_mouse_position(), 40)
+    c = Circle(world.get_mouse_position(), 40)
     c.color = (255,255,255, 100)
     c.border = None
 
-board.run()
+world.run()
 

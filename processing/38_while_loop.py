@@ -1,6 +1,6 @@
-from miniworldmaker import *
+from miniworlds import *
 import random
-board = Board(255, 60)
+world = World(255, 60)
 x = 0
 
 while x < 255:
@@ -8,4 +8,4 @@ while x < 255:
     c.color = (x,0,0,random.randint(0,255))
     x = x + random.randint(10,50)
     
-board.run()
+world.run()

@@ -1,5 +1,5 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = PixelBoard(100, 200)
+world = World(100, 200)
 Ellipse.from_center((50, 100), 100, 200)
-board.run()
+world.run()

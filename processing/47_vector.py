@@ -1,9 +1,9 @@
-from miniworldmaker import *
-board = Board()
+from miniworlds import *
+world = World()
 
-@board.register
+@world.register
 def act(self):
-    m_vec = Vector(board.get_mouse_x(), board.get_mouse_y())
+    m_vec = Vector(world.mouse.x(), world.mouse.y())
     center = Vector(200, 200)
     m_vec = m_vec - center
     print(m_vec.x, m_vec.y)
@@ -13,4 +13,4 @@ def act(self):
     #print((m_vec.x, m_vec.y), (center.x, center.y))
     Line((center.x, center.y),(m_vec.x,m_vec.y))
     
-board.run()
+world.run()

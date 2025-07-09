@@ -1,13 +1,13 @@
-from miniworldmaker import *
+from miniworlds import *
 import random
 
-board = Board(400, 200)
+world = World(400, 200)
 points = Number((0,0), 0)
 
 red_circles = []
 green_circles = []
 
-@board.register
+@world.register
 def act(self):
     if self.frame % 100 == 0:
         c = Circle((400, random.randint(0,200), 40))
@@ -22,7 +22,7 @@ def act(self):
     for circle in green_circles:
         circle.move_left()
 
-@board.register
+@world.register
 def on_mouse_left(self, mouse_position):
     tokens = self.get_tokens_at_position(mouse_position)
     for token in tokens:
@@ -33,4 +33,4 @@ def on_mouse_left(self, mouse_position):
             token.remove()
             points.set_number(points.get_number() + 1)
             
-board.run()
+world.run()

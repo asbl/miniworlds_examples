@@ -1,6 +1,6 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = PixelBoard(800, 600)
+world = World(800, 600)
 a1 = Arc.from_center((200, 200), 200, 200, 30, 242)
 a1.border = 4
-board.run()
+world.run()

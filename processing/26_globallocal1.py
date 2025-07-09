@@ -1,9 +1,9 @@
-from miniworldmaker import *
-board = PixelBoard((100,100))
+from miniworlds import *
+world = World(100,100)
 a = 3
-@board.register
+@world.register
 def on_key_pressed_a(self):
     print(a)
-board.run()
+world.run()
 
 

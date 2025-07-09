@@ -1,6 +1,6 @@
-from miniworldmaker import *
+from miniworlds import *
 
-board = Board()
+world = World()
 
 player = Rectangle((200,350),20, 40)
 player.acceleration = 0
@@ -41,14 +41,14 @@ def on_key_pressed_s(self):
 def on_detecting_token(self, other):
     if other in obstacles:
         Text((50,50), "Kaboom!")
-        self.board.stop()
+        self.world.stop()
     if other == goal:
-        Text((50,50), f"Success! Time: {self.board.frame}")
-        self.board.stop()
+        Text((50,50), f"Success! Time: {self.world.frame}")
+        self.world.stop()
         
 @player.register
 def on_not_detecting_board(self):
     Text((50,50), "Kaboom!")
-    self.board.stop()
+    self.world.stop()
     
-board.run()
+world.run()
