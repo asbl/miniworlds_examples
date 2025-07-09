@@ -13,25 +13,21 @@ color_blue.color = (0,0,255)
 color_green = Actor((80,360), origin = "topleft")
 color_green.color = (0,255,0)
 
-last_mouse_pos = None
+start_mouse_pos = None
 
 @world.register
-def on_mouse_motion(self, mouse_pos):
-    global last_mouse_pos
-    if self.is_mouse_left_pressed():
-        end_pos = mouse_pos
-        if last_mouse_pos:
-            l = Line(last_mouse_pos, end_pos)
-            l.stroke_color = draw_color
-            l.static = True
-        last_mouse_pos = mouse_pos
-    else:
-        last_mouse_pos = None
-        
+def on_mouse_left_up(self, end_pos):   
+    global start_mouse_pos 
+    if (start_mouse_pos):
+        l = Line(start_mouse_pos, end_pos)
+        l.stroke_color = draw_color
+        l.static = True
+    start_mouse_pos = None
+
 @world.register
-def on_mouse_left(self, pos):
-    global last_mouse_pos
-    last_mouse_pos = None
+def on_mouse_left_down(self, pos):   
+    global start_mouse_pos
+    start_mouse_pos = pos
 
 @color_red.register
 def on_clicked(self, mouse_pos):

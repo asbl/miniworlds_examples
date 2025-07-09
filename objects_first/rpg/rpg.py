@@ -1,4 +1,5 @@
 from miniworlds import TiledWorld, Toolbar, Console, Actor, Button, Label, PagerHorizontal
+import easygui
 
 world = TiledWorld()
 world.columns = 8
@@ -7,6 +8,7 @@ world.tile_size = 24
 world.camera.world_size_x = 16
 world.camera.world_size_y = 16
 world.add_background((255, 255, 255, 255))
+world.tick_rate = 1
 
 toolbar = Toolbar()
 @toolbar.register
@@ -17,11 +19,11 @@ def on_setup(self):
 world.toolbar = world.layout.add_right(toolbar, size=180)
 
 console = Console()
-world.console = world.add_bottom(console, size=100)
+world.console = world.layout.add_bottom(console, size=100)
 world.console.newline("You enter a new world")
 
 pager = PagerHorizontal(console)
-world.add_bottom(pager, size=60)
+world.layout.add_bottom(pager, size=60)
 
 def create_grass(pos):
     g = Actor(pos)
@@ -54,6 +56,7 @@ def on_setup(self):
     create_wall((6, 0), self.walls)
     create_wall((6, 1), self.walls)
     create_wall((6, 3), self.walls)
+    self.music.play("sounds/bensound-betterdays.mp3")
     
 
 torch = Actor((10, 4))
@@ -111,7 +114,7 @@ def act(self):
 def burn_torch(self, sender):
     print("BURN?")
     if not fireplace.burning:
-        fireplace.world.play_sound("sounds/fireplace.wav")
+        fireplace.world.sound.play("sounds/fireplace.wav")
         fireplace.switch_costume(fireplace.costume_burned)
         fireplace.costume.is_animated = True
 
@@ -129,22 +132,22 @@ inventory = []
 
 @player.register
 def on_key_down_w(self):
-    player.move_up()
+    player.move(direction = "up")
 
 
 @player.register
 def on_key_down_s(self):
-    player.move_down()
+    player.move(direction = "down")
 
 
 @player.register
 def on_key_down_a(self):
-    player.move_left()
+    player.move(direction = "left")
 
 
 @player.register
 def on_key_down_d(self):
-    player.move_right()
+    player.move(direction = "right")
 
 
 @player.register_message("Torch")
@@ -164,15 +167,15 @@ def ask_open_door(self, door):
     if door.closed:
         self.undo_move()
         message = "The door is closed - Do you want to open it?"
-        reply = self.ask.choices(message, ["Yes", "No"])
+        reply = easygui.choicebox(message, "Open the door?", ["Yes", "No"])
         if reply == "Yes":
             self.send_message("open_door")
 
 
 @player.register_sensor(torch)
 def pick_up_torch(self, torch):
-    reply = self.ask.choices(
-        "You find a torch - Do you want to pick it up?", ["Yes", "No"]
+    reply = easygui.choicebox(
+        "You find a torch - Do you want to pick it up?", "Pick it up?", ["Yes", "No"]
     )
     if reply == "Yes":
         inventory.append("Torch")

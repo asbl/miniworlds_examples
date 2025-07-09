@@ -59,7 +59,7 @@ def on_key_down_space(self):
     laser.costume.is_upscaled = True
     laser.costume.orientation = 180
     laser.speed = 15
-    laser.world.play_sound("sounds/laser.wav")
+    laser.world.sound.play("sounds/laser.wav")
 
     @laser.register
     def act(self):
@@ -87,7 +87,7 @@ def on_key_down_space(self):
             )
             explosion.costume.animation_speed = 10
             explosion.costume.is_animated = True
-            world.play_sound("sounds/explosion.wav")
+            world.sound.play("sounds/explosion.wav")
             ActionTimer(24, explosion.remove)
             self.remove()
 
@@ -114,7 +114,7 @@ def on_detecting_actor(self, token):
         explosion.costume.animation_speed = 10
         explosion.costume.is_animated = True
         ActionTimer(24, explosion.remove)
-        world.play_sound("sounds/explosion.wav")
+        world.sound.play("sounds/explosion.wav")
         self.remove()
 
 

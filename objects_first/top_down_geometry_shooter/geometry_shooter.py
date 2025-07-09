@@ -42,7 +42,6 @@ def on_key_pressed_s(self):
 
 @player.register
 def on_key_down_space(self):
-    print("space")
     global cooldown
     global bullets
     if cooldown <= 0:
@@ -71,10 +70,6 @@ def on_key_down_space(self):
                 enemies.remove(other)
                 kill_enemy(other)
 
-@player.register
-def act(self):
-    print("in view?", self.world.camera.is_actor_in_view(self), self.position_manager.get_global_rect(), self.world.camera.rect)
-    
 def create_enemy():
     enemy = Circle((random.randint(400, 5000), random.randint(400, 5000)))
     r = random.randint(0, 255)

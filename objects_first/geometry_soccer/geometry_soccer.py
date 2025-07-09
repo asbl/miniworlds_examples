@@ -22,7 +22,7 @@ def on_key_pressed_a(self):
 def on_key_pressed_d(self):
     self.turn_right(1)
         
-p2 = Circle(300,100)
+p2 = miniworlds.Circle((300,100), 10)
 p2.physics.density = 1
 p2.elasticy = 20
 world.run()
