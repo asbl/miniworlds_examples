@@ -18,8 +18,8 @@ months.append(2.8)
 print(months)
 i = 0 
 for month in months:
-    Rectangle((0,i), month * 10, 20)
-    n = Number((200,i), month)
+    Rectangle.from_topleft((0,i), month * 10, 20)
+    n = Number.from_topleft((200,i), month)
     n.font_size = 10
     i = i + 20
     

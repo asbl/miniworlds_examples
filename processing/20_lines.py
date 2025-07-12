@@ -8,7 +8,7 @@ def on_setup(self):
 
 @world.register
 def act(self):
-    Line(world.get_prev_mouse_position(), world.get_mouse_position()) 
+    Line(world.mouse.get_last_position(), world.mouse.get_position()) 
 
 world.run()
 

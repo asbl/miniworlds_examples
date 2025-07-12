@@ -83,10 +83,12 @@ maze = [
 
 @world.register
 def on_setup(self):
+    print("setup world")
     for row in range(len(maze)):
         for column in range(len(maze[row])):
             x = column
             y = row
+            print("add actor", maze, row, column)
             actor_cls = tiles[maze[row][column]]
             if actor_cls:
                 t = actor_cls((x, y))

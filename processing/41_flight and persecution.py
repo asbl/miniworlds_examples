@@ -12,7 +12,7 @@ flee_speed = 1.1
 
 @player.register
 def act(self):
-    player.position = world.get_mouse_position()
+    player.position = world.mouse.get_position()
 
 @chaser.register
 def act(self):

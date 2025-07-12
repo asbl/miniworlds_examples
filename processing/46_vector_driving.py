@@ -2,15 +2,15 @@ from miniworlds import *
 
 world = World()
 
-player = Rectangle((200,350),20, 40)
+player = Rectangle.from_topleft((230,350),20, 40)
 player.acceleration = 0
 player.velocity = 1
 player.limit = 5
 player.vector = Vector(1,0)
 obstacles = []
 obstacles.append(Rectangle.from_center((200,200),200,200))
-obstacles.append(Rectangle((180,300),20,100))
-goal = Rectangle((160,300),20,100)
+obstacles.append(Rectangle.from_topleft((180,300),20,100))
+goal = Rectangle.from_topleft((160,300),20,100)
 goal.color = (0,255,0)
 
 @player.register
@@ -38,7 +38,7 @@ def on_key_pressed_s(self):
     self.vector.multiply(self.speed)
     
 @player.register
-def on_detecting_token(self, other):
+def on_detecting_actor(self, other):
     if other in obstacles:
         Text((50,50), "Kaboom!")
         self.world.stop()
@@ -47,7 +47,7 @@ def on_detecting_token(self, other):
         self.world.stop()
         
 @player.register
-def on_not_detecting_board(self):
+def on_not_detecting_world(self):
     Text((50,50), "Kaboom!")
     self.world.stop()
     

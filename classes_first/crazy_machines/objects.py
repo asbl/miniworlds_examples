@@ -29,7 +29,7 @@ class ObjectFactory:
         self.dummy = None
         self.needs_two_clicks = True
 
-    def on_click(self, mouse_pos):
+    def on_down(self, mouse_pos):
         if (
             self.needs_two_clicks
             and not self.saved_mouse_pos
@@ -76,6 +76,7 @@ class ObjectFactory:
 
     def add_to_level(self, max_objects):
         self.selector_label.world = self.world.toolbar
+        print("world", self.world)
         self.world.objects.append(self)
         self.max_objects = max_objects
         self.selector_label.set(self.max_objects)

@@ -5,8 +5,10 @@ from miniworlds_physics import PhysicsWorld
 class MyWorld(PhysicsWorld):
 
     def on_setup(self):
+        print("setup world")
         self.add_background("images/background.png")
-        Bird((75, 200))
+        print("create bird")
+        bird = Bird((75, 200))
         self.pipe1 = Pipe()
         self.pipe1.position = (260, self.height - 280)
         self.pipe1.topleft = (260, self.height - 280)
@@ -19,8 +21,8 @@ class MyWorld(PhysicsWorld):
         self.score = Number(position=(10, 10))
         self.score.size = (40, 40)
         self.score.physics.simulation = None
-        self.stop()
-
+        self.is_running = False
+        
 
 class Pipe(Actor):
 
@@ -52,12 +54,13 @@ class Pipe(Actor):
 class Bird(Actor):
 
     def on_setup(self):
+        print("setup bird")
         self.add_costume("images/fly.png")
         self.size = (60, 60)
         self.costume.orientation = 180
-        self.flip_x()
         self.physics.size = (0.8, 0.8)
         self.physics.shape_type = "circle"
+        self.flip_x()
 
     def on_detecting_borders(self, borders):
         if "bottom" in borders or "left" in borders:
@@ -65,9 +68,10 @@ class Bird(Actor):
             self.world.reset()
 
     def on_touching_pipe(self, other, info):
-        print("Ouff!")
+        print("Ouff!", self, other, info)
 
     def on_key_down_space(self):
+        print("space")
         self.set_velocity_y(-300)
         if self.world.is_running is False:
             self.world.is_running = True

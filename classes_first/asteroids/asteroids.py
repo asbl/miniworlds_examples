@@ -44,7 +44,7 @@ class Player(miniworlds.Actor):
         print("asteroid!!!", asteroid)
         explosion = Explosion(position=(self.position[0] + 40, self.position[1] + 40))
         explosion.costume.is_animated = True
-        self.world.play_sound("sounds/explosion.wav")
+        self.world.sound.play("sounds/explosion.wav")
         self.remove()
 
     def on_detecting_borders(self, borders):
@@ -63,7 +63,7 @@ class Laser(miniworlds.Actor):
         self.costume.is_upscaled = True
         self.costume.orientation = 180
         self.speed = 15
-        self.world.play_sound("sounds/laser.wav")
+        self.world.sound.play("sounds/laser.wav")
 
     def act(self):
         self.move()
@@ -74,7 +74,7 @@ class Laser(miniworlds.Actor):
         explosion.costume.is_animated = True
         explosion.costume.text_position = (100, 100)
         explosion.costume.text = "100"
-        self.world.play_sound("sounds/explosion.wav")
+        self.world.sound.play("sounds/explosion.wav")
         self.remove()
 
 

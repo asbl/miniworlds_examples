@@ -4,7 +4,8 @@ world = World()
 
 @world.register
 def act(self):
-    c = Circle(world.get_mouse_position(), 40)
+    print("act::", self.mouse.position)
+    c = Circle(self.mouse.position, 40)
     c.color = (255,255,255, 100)
     c.border = None
 

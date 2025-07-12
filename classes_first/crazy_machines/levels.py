@@ -9,6 +9,7 @@ from objects import (
     RectObjectFactory,
     Wheel,
 )
+import time
 
 
 class LevelBase(miniworlds_physics.PhysicsWorld):
@@ -25,14 +26,13 @@ class LevelBase(miniworlds_physics.PhysicsWorld):
         self.status = "waiting"  # "waiting", "started", "won", "lost"
 
     def on_setup(self):
-        print("setup level")
         self.window.reset()
         self.status = "waiting"  # "waiting", "started", "won", "lost"
         self.timer = miniworlds.Number((10, 10))
         self.timer.physics.simulation = None
         self.timer.set_value(10)
         toolbar = miniworlds.Toolbar()
-        self.toolbar = self.add_right(toolbar, size=200)
+        self.toolbar = self.layout.add_right(toolbar, size=200)
         self.start_marker = miniworlds.Circle((-100, -100))
         self.start_marker.color = (100, 200, 200)
         self.start_marker.physics.simulation = None
@@ -61,9 +61,9 @@ class LevelBase(miniworlds_physics.PhysicsWorld):
         elif self.status == "lost":
             self.level_manager.same_level()
 
-    def on_mouse_left(self, mouse_pos):
+    def on_mouse_left_down(self, mouse_pos):
         if self.selected_object:
-            self.selected_object.on_click(mouse_pos)
+            self.selected_object.on_down(mouse_pos)
 
     def on_mouse_motion(self, mouse_pos):
         if self.selected_object:
@@ -100,14 +100,14 @@ class LevelBase(miniworlds_physics.PhysicsWorld):
 
 class Level1(LevelBase):
     def on_setup(self):
-        print("setup Level")
+        print("setup Level ", self, " started")
         super().on_setup()
         line_factory = LineFactory(self, 100)
         line_factory.add_to_level(3)
         self.selected_object = line_factory
         self.start_marker.center = (100, 100)
         self.end_marker.center = (200, 200)
-        print("setup world")
+        print("setup level ", self, " completed")
 
 
 class Level2(LevelBase):
@@ -120,7 +120,6 @@ class Level2(LevelBase):
         self.selected_object = line_factory
         self.start_marker.center = (100, 100)
         self.end_marker.center = (200, 200)
-        print("setup world", self.backgrounds)
 
 
 class Level3(LevelBase):
@@ -134,7 +133,6 @@ class Level3(LevelBase):
         self.selected_object = rect_factory
         self.start_marker.center = (100, 100)
         self.end_marker.center = (200, 200)
-        print("setup world", self.backgrounds)
 
 
 class Level4(LevelBase):
@@ -150,7 +148,6 @@ class Level4(LevelBase):
         self.selected_object = None
         self.start_marker.center = (100, 100)
         self.end_marker.center = (200, 200)
-        print("setup world", self.backgrounds)
 
 
 class Level5(LevelBase):
@@ -166,7 +163,6 @@ class Level5(LevelBase):
         self.selected_object = pin_joint_factory
         self.start_marker.center = (100, 100)
         self.end_marker.center = (200, 180)
-        print("setup world", self.backgrounds)
 
 
 class Level6(LevelBase):
@@ -179,7 +175,6 @@ class Level6(LevelBase):
         self.start_marker.center = (100, 100)
         miniworlds.Line((50, 90), (150, 150))
         self.end_marker.center = (350, 280)
-        print("setup world", self.backgrounds)
 
 
 class Level7(LevelBase):
@@ -192,7 +187,6 @@ class Level7(LevelBase):
         self.start_marker.center = (50, 50)
         miniworlds.Line((30, 85), (120, 120))
         self.end_marker.center = (350, 350)
-        print("setup world", self.backgrounds)
         p = miniworlds.Point((120, 120))
         p.physics.simulation = None
         line = miniworlds.Line((120, 120), (160, 120))

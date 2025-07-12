@@ -9,7 +9,7 @@ mover.topspeed = 10
 @world.register
 def act(self):
     mouse_vec = Vector(world.mouse.x(), world.mouse.y())
-    location = Vector.from_token_position(mover)
+    location = Vector.from_actor_position(mover)
     acceleration = mouse_vec - location
     acceleration.normalize().multiply(2)
     mover.velocity.add(acceleration)

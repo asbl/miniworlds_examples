@@ -10,11 +10,12 @@ class Ball(Circle):
         self.speed = Vector(uniform(-2, 2), uniform(-2,2));
 
     def act(self):
-        self.position = self.position + self.speed
-        if self.x < 5 or self.x > self.max_w - 5:
-            self.speed.x = - self.speed.x
-        if self.y < 5 or self.y > self.max_h - 5:
-            self.speed.y = - self.speed.y
+        pass
+        #self.position = self.position + self.speed
+        #if self.x < 5 or self.x > self.max_w - 5:
+        #   self.speed.x = - self.speed.x
+        #if self.y < 5 or self.y > self.max_h - 5:
+        #    self.speed.y = - self.speed.y
 
 class Connector(Line):
     

@@ -8,7 +8,7 @@ def on_setup(self):
 
 @world.register
 def act(self):
-    Ellipse(world.get_mouse_position(), 10, 10) 
+    Ellipse(world.mouse.get_position(), 10, 10) 
 
 @world.register
 def on_mouse_left(self, position):
