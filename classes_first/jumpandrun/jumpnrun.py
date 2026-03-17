@@ -115,7 +115,7 @@ c.physics.simulation = "manual"
 c2 = miniworlds.Rectangle((400, 360), 400, 4)
 c2.direction = 10
 c2.physics.simulation = "manual"
-c2.friction = 1
+c2.physics.friction = 1
 
 c3 = miniworlds.Rectangle((400, 220), 80, 4)
 c3.direction = 10

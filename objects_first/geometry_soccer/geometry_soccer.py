@@ -24,5 +24,5 @@ def on_key_pressed_d(self):
         
 p2 = miniworlds.Circle((300,100), 10)
 p2.physics.density = 1
-p2.elasticy = 20
+p2.physics.elasticity = 20
 world.run()
