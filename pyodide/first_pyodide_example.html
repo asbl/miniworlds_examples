@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.js"></script>
   <title>miniworlds in Pyodide</title>
 </head>
+
 <body>
   <h1>miniworlds in Pyodide</h1>
   <p>Das Spiel sollte unten im Canvas-Fenster ausgeführt werden.</p>
@@ -21,7 +23,6 @@
 
       // Installiere notwendige Pakete
       await pyodide.loadPackage("micropip");
-      await pyodide.loadPackage("sqlite3");
 
       // Python-Pakete installieren
       await pyodide.runPythonAsync(`
@@ -51,4 +52,5 @@
     main()
   </script>
 </body>
+
 </html>

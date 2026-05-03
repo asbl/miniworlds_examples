@@ -60,7 +60,6 @@
 
         // Install necessary packages
         await pyodide.loadPackage("micropip");
-        await pyodide.loadPackage("sqlite3");
 
         const miniworldsWheelURL = "http://localhost:8000/miniworlds-3.0.2.11-py3-none-any.whl";
         await pyodide.runPythonAsync(`
