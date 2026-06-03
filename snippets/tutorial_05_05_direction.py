@@ -1,6 +1,6 @@
 from miniworlds import *
 
-world = world(400,400)
+world = World(400,400)
 world.add_background("images/grass.jpg")
 player = Actor()
 player.add_costume("images/player.png")

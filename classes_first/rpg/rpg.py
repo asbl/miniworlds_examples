@@ -25,11 +25,11 @@ class MyWorld(miniworlds.TiledWorld):
         self.fireplace = Fireplace((10, 12))
         self.door = Door((6, 2))
         self.player = Player((8, 2))
-        self.play_music("sounds/bensound-betterdays.mp3")
+        self.music.play("sounds/bensound-betterdays.mp3")
         self.toolbar = miniworlds.Toolbar()
         self.console = miniworlds.Console()
-        self.toolbar = self.add_right(self.toolbar, size = 200)
-        self.console = self.add_bottom(self.console, size = 100)
+        self.toolbar = self.layout.add_right(self.toolbar, size = 200)
+        self.console = self.layout.add_bottom(self.console, size = 100)
 
     def on_message(self, data):
         if data == "Fackel":

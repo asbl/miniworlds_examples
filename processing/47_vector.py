@@ -8,8 +8,8 @@ def act(self):
     m_vec = m_vec - center
     print(m_vec.x, m_vec.y)
     m_vec.normalize()
-    m_vec.multiply(100)
-    m_vec.add(center)
+    m_vec = m_vec * 100
+    m_vec = m_vec + center
     #print((m_vec.x, m_vec.y), (center.x, center.y))
     Line((center.x, center.y),(m_vec.x,m_vec.y))
     

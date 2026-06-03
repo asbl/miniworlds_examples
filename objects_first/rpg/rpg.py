@@ -1,5 +1,14 @@
 from miniworlds import TiledWorld, Toolbar, Console, Actor, Button, Label, PagerHorizontal
-import easygui
+try:
+    import easygui
+except ModuleNotFoundError:
+    easygui = None
+
+
+def choicebox(message, title, choices):
+    if easygui:
+        return easygui.choicebox(message, title, choices)
+    return choices[0]
 
 world = TiledWorld()
 world.columns = 8
@@ -123,7 +132,7 @@ def burn_torch(self, sender):
 def open(self, sender):
     if door.closed:
         door.switch_costume(door.door_open_costume)
-        door.world.play_sound("sounds/olddoor.wav")
+        door.world.sound.play("sounds/olddoor.wav")
         door.closed = False
 
 
@@ -167,14 +176,14 @@ def ask_open_door(self, door):
     if door.closed:
         self.undo_move()
         message = "The door is closed - Do you want to open it?"
-        reply = easygui.choicebox(message, "Open the door?", ["Yes", "No"])
+        reply = choicebox(message, "Open the door?", ["Yes", "No"])
         if reply == "Yes":
             self.send_message("open_door")
 
 
 @player.register_sensor(torch)
 def pick_up_torch(self, torch):
-    reply = easygui.choicebox(
+    reply = choicebox(
         "You find a torch - Do you want to pick it up?", "Pick it up?", ["Yes", "No"]
     )
     if reply == "Yes":

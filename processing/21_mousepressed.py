@@ -8,7 +8,9 @@ def on_setup(self):
 
 @world.register
 def act(self):
-    Ellipse(world.mouse.get_position(), 10, 10) 
+    mouse_position = world.mouse.get_position()
+    if mouse_position:
+        Ellipse(mouse_position, 10, 10) 
 
 @world.register
 def on_mouse_left(self, position):
@@ -19,4 +21,3 @@ def on_mouse_right(self, position):
     world.fill_color = (255, 255, 255)
     
 world.run()
-
