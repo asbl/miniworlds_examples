@@ -44,26 +44,38 @@ def on_key_down_space(self):
 @world.register
 def on_mouse_left_down(self, mouse_pos):
     global state
-    global obj
-    global line_dummy
-    if obj == "line" and not state:
+    if obj == "line" and state is None and lines_counter.get_value() < 3:
         state = mouse_pos
 
-    if line_dummy:
+
+@world.register
+def on_mouse_motion(self, mouse_pos):
+    global line_dummy
+    if line_dummy is not None:
         line_dummy.remove()
-    if state and self.distance_to(state, mouse_pos) < 100 and lines_counter.get_value() < 3:
+        line_dummy = None
+    if state is not None and 0 < self.distance_to(state, mouse_pos) < max_length:
         line_dummy = miniworlds.Line(state, mouse_pos)
         line_dummy.border_color = (100, 100, 100, 100)
+        line_dummy.physics.simulation = None
 
 
 @world.register
 def on_mouse_left_up(self, mouse_pos):
     global state
-    if state and self.distance_to(state, mouse_pos) < 100 and lines_counter.get_value() < 3:
+    global line_dummy
+    if line_dummy is not None:
+        line_dummy.remove()
+        line_dummy = None
+    if (
+        state is not None
+        and 0 < self.distance_to(state, mouse_pos) < max_length
+        and lines_counter.get_value() < 3
+    ):
         # Add the Line
-        line = miniworlds.Line(state, mouse_pos)
-        state = None
+        miniworlds.Line(state, mouse_pos)
         lines_counter.add(1)
+    state = None
 
 
 world.run()
