@@ -2,7 +2,6 @@ import miniworlds
 
 
 world = miniworlds.World(620, 380)
-world.background = (236, 241, 246)
 
 status = miniworlds.Text((24, 24), "Start the dialog sequence.")
 status.origin = "topleft"
@@ -42,10 +41,6 @@ def make_button(position, label, callback):
     text.color = (255, 255, 255)
 
     @button.register
-    def on_clicked_left(self, mouse_pos):
-        callback()
-
-    @text.register
     def on_clicked_left(self, mouse_pos):
         callback()
 
