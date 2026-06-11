@@ -3,6 +3,9 @@ import miniworlds
 class MyWorld(miniworlds.TiledWorld):
 
     def on_setup(self):
+        self.pending_question = None
+        self.question_widgets = []
+        self.torch_button = None
         self.columns = 24
         self.rows = 14
         self.tile_size = 20
@@ -32,12 +35,38 @@ class MyWorld(miniworlds.TiledWorld):
         self.console = self.layout.add_bottom(self.console, size = 100)
 
     def on_message(self, data):
+        if self.pending_question is not None and data in self.pending_question:
+            callback = self.pending_question[data]
+            self.clear_question()
+            if callback:
+                callback()
+            return
+
         if data == "Fackel":
             fireplace = self.player.detect(Fireplace)
             if fireplace:
                 self.console.newline("Du zündest die Feuerstelle an.")
                 self.fireplace.burn()
-                self.toolbar.remove_widget("Fackel")
+                if self.torch_button is not None:
+                    self.toolbar.remove(self.torch_button)
+                    self.torch_button = None
+
+    def ask_yes_no(self, message, on_yes, on_no=None):
+        if self.pending_question is not None:
+            return
+        self.console.newline(message)
+        label = miniworlds.Label(message)
+        buttons = miniworlds.YesNoButton("Ja", "Nein")
+        self.toolbar.add(label)
+        self.toolbar.add(buttons)
+        self.question_widgets.extend([label, buttons])
+        self.pending_question = {"Ja": on_yes, "Nein": on_no}
+
+    def clear_question(self):
+        for widget in self.question_widgets:
+            self.toolbar.remove(widget)
+        self.question_widgets.clear()
+        self.pending_question = None
 
 
 class Player(miniworlds.Actor):
@@ -46,39 +75,48 @@ class Player(miniworlds.Actor):
         self.add_costume("images/knight.png")
         self.costume.is_rotatable = False
         self.inventory = []
+        self.is_blockable = True
 
     def on_key_down_w(self):
-        self.move_up()
+        if self.world.pending_question is None:
+            self.move_in_direction("up")
 
     def on_key_down_s(self):
-        self.move_down()
+        if self.world.pending_question is None:
+            self.move_in_direction("down")
 
     def on_key_down_a(self):
-        self.move_left()
+        if self.world.pending_question is None:
+            self.move_in_direction("left")
 
     def on_key_down_d(self):
-        self.move_right()
+        if self.world.pending_question is None:
+            self.move_in_direction("right")
 
     def on_detecting_torch(self, torch):
-        reply = self.ask.choices("Du findest eine Fackel. Möchtest du sie aufheben?",["Ja", "Nein"])
-        if reply == "Ja":
+        def pick_up():
             self.inventory.append("Torch")
             self.world.torch.remove()
             self.world.console.newline("Du hebst die Fackel auf.")
-        button = miniworlds.Button("Fackel", "images/torch.png")
-        button.world = self.world.toolbar
+            self.world.torch_button = miniworlds.Button("Fackel", "images/torch.png")
+            self.world.toolbar.add(self.world.torch_button)
+
+        self.world.ask_yes_no(
+            "Du findest eine Fackel. Möchtest du sie aufheben?",
+            pick_up,
+        )
 
     def on_detecting_wall(self, wall):
-        self.move_back()
+        self.undo_move()
 
     def on_detecting_door(self, door):
         if door.closed:
-            self.move_back()           
+            self.undo_move()
             message = "Die Tür ist geschlossen... möchtest du sie öffnen"
-            reply = self.ask.choices(message, ["Ja", "Nein"])
-            if reply == "Ja":
+            def open_door():
                 self.world.door.open()
                 self.world.console.newline("Du hast das Tor geöffnet.")
+            self.world.ask_yes_no(message, open_door)
         else:
             self.world.console.newline("Du gehst durch das Tor...")
 
@@ -87,6 +125,7 @@ class Wall(miniworlds.Actor):
     def on_setup(self):
         self.add_costume("images/wall.png")
         self.static = True
+        self.is_blocking = True
 
 
 class Grass(miniworlds.Actor):
@@ -123,7 +162,7 @@ class Door(miniworlds.Actor):
         self.closed = True
 
     def open(self):
-        if not self.closed:
+        if self.closed:
             self.switch_costume(self.costume_open)
             #self.world.play_sound("sounds/olddoor.wav")
             self.closed = False

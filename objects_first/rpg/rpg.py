@@ -1,14 +1,13 @@
-from miniworlds import TiledWorld, Toolbar, Console, Actor, Button, Label, PagerHorizontal
-try:
-    import easygui
-except ModuleNotFoundError:
-    easygui = None
-
-
-def choicebox(message, title, choices):
-    if easygui:
-        return easygui.choicebox(message, title, choices)
-    return choices[0]
+from miniworlds import (
+    TiledWorld,
+    Toolbar,
+    Console,
+    Actor,
+    Button,
+    Label,
+    PagerHorizontal,
+    YesNoButton,
+)
 
 world = TiledWorld()
 world.columns = 8
@@ -33,6 +32,39 @@ world.console.newline("You enter a new world")
 
 pager = PagerHorizontal(console)
 world.layout.add_bottom(pager, size=60)
+
+pending_question = None
+question_widgets = []
+
+
+def clear_question():
+    global pending_question
+    for widget in question_widgets:
+        world.toolbar.remove(widget)
+    question_widgets.clear()
+    pending_question = None
+
+
+def ask_yes_no(message, on_yes, on_no=None):
+    global pending_question
+    if pending_question is not None:
+        return
+    world.console.newline(message)
+    label = Label(message)
+    buttons = YesNoButton("Yes", "No")
+    world.toolbar.add(label)
+    world.toolbar.add(buttons)
+    question_widgets.extend([label, buttons])
+    pending_question = {"Yes": on_yes, "No": on_no}
+
+
+@world.register
+def on_message(self, message):
+    if pending_question is not None and message in pending_question:
+        callback = pending_question[message]
+        clear_question()
+        if callback:
+            callback()
 
 def create_grass(pos):
     g = Actor(pos)
@@ -137,36 +169,44 @@ def open(self, sender):
 
 
 inventory = []
+torch_button = None
 
 
 @player.register
 def on_key_down_w(self):
-    player.move(direction = "up")
+    if pending_question is None:
+        player.move_in_direction("up")
 
 
 @player.register
 def on_key_down_s(self):
-    player.move(direction = "down")
+    if pending_question is None:
+        player.move_in_direction("down")
 
 
 @player.register
 def on_key_down_a(self):
-    player.move(direction = "left")
+    if pending_question is None:
+        player.move_in_direction("left")
 
 
 @player.register
 def on_key_down_d(self):
-    player.move(direction = "right")
+    if pending_question is None:
+        player.move_in_direction("right")
 
 
 @player.register_message("Torch")
 def light_fireplace(self, data):
+    global torch_button
     print("light")
     found_actors = player.detect_all()
     if fireplace in found_actors:
         self.world.console.newline("You light the fireplace.")
         self.send_message("burn")
-        self.world.toolbar.remove("Torch")
+        if torch_button is not None:
+            self.world.toolbar.remove(torch_button)
+            torch_button = None
     else:
         self.world.console.newline("...nothing happens")
 
@@ -176,24 +216,22 @@ def ask_open_door(self, door):
     if door.closed:
         self.undo_move()
         message = "The door is closed - Do you want to open it?"
-        reply = choicebox(message, "Open the door?", ["Yes", "No"])
-        if reply == "Yes":
-            self.send_message("open_door")
+        ask_yes_no(message, lambda: self.send_message("open_door"))
 
 
 @player.register_sensor(torch)
 def pick_up_torch(self, torch):
-    reply = choicebox(
-        "You find a torch - Do you want to pick it up?", "Pick it up?", ["Yes", "No"]
-    )
-    if reply == "Yes":
+    def pick_up():
+        global torch_button
         inventory.append("Torch")
         torch.remove()
         l = Label("You pick up the torch")
-        line = world.console.add(l)
+        world.console.add(l)
         
-        b = Button("Torch", "images/torch.png")
-        world.toolbar.add(b)
+        torch_button = Button("Torch", "images/torch.png")
+        world.toolbar.add(torch_button)
+
+    ask_yes_no("You find a torch - Do you want to pick it up?", pick_up)
 
 
 world.run()
