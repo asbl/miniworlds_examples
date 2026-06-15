@@ -137,6 +137,10 @@ def handle_confirmation(value):
     if value:
         set_status("Sequence completed.")
         summary.text = f"Player: {dialog_data['name']} | Color: {dialog_data['color']}"
+        world.dialog.msgbox(
+            f"{dialog_data['name']} is ready to play!",
+            "Player created",
+        )
     else:
         set_status("Sequence cancelled at confirmation.")
         summary.text = " "
