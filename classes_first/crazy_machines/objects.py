@@ -34,6 +34,7 @@ class ObjectFactory:
             self.needs_two_clicks
             and not self.saved_mouse_pos
             and self.world.camera.is_in_screen(mouse_pos)
+            and self.selector_label.get_value() > 0
         ):
             # Save mouse pos
             self.saved_mouse_pos = mouse_pos
@@ -71,8 +72,9 @@ class ObjectFactory:
         self.saved_mouse_pos = None
         return actor
 
-    def valid_placement(self):
-        pass
+    def valid_placement(self, mouse_pos):
+        del mouse_pos
+        return False
 
     def add_to_level(self, max_objects):
         self.selector_label.world = self.world.toolbar
@@ -101,7 +103,7 @@ class LineFactory(ObjectFactory):
         return (
             self.saved_mouse_pos
             and self.world.distance_to(mouse_pos, self.saved_mouse_pos) < self.max_length
-            and self.selector_label.get_value() >= 0
+            and self.selector_label.get_value() > 0
         )
 
     def create_actor(self, saved_mouse_pos, mouse_pos):
