@@ -97,7 +97,7 @@ def on_setup(self):
     create_wall((6, 0), self.walls)
     create_wall((6, 1), self.walls)
     create_wall((6, 3), self.walls)
-    self.music.play("sounds/bensound-betterdays.mp3")
+    self.music.play("sounds/generated-ambient-loop.mp3")
     
 
 torch = Actor((10, 4))

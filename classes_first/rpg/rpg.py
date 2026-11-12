@@ -28,7 +28,7 @@ class MyWorld(miniworlds.TiledWorld):
         self.fireplace = Fireplace((10, 12))
         self.door = Door((6, 2))
         self.player = Player((8, 2))
-        self.music.play("sounds/bensound-betterdays.mp3")
+        self.music.play("sounds/generated-ambient-loop.mp3")
         self.toolbar = miniworlds.Toolbar()
         self.console = miniworlds.Console()
         self.toolbar = self.layout.add_right(self.toolbar, size = 200)
